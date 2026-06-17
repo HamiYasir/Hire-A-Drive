@@ -18,8 +18,8 @@ const DriverJourney=()=>{
 
     useEffect(()=>{
         const getDetailsForUser=async()=>{
-            // await axios.delete(`http://localhost:${process.env.REACT_APP_BACKEND_PORT}/deleteUserRequest/${userId}/${driverId}`) // LOCALHOST
-            await axios.delete(`https://hire-a-drive-backend.onrender.com/deleteUserRequest/${userId}/${driverId}`) // DEPLOYMENT
+            // const details=await axios.delete(`http://localhost:${process.env.REACT_APP_BACKEND_PORT}/deleteUserRequest/${userId}/${driverId}`) // LOCALHOST
+            const details=await axios.delete(`https://hire-a-drive-backend.onrender.com/deleteUserRequest/${userId}/${driverId}`) // DEPLOYMENT
             setUsername(details.data.details.username)
         }
 
