@@ -7,7 +7,7 @@ require('dotenv').config();
 
 const app=express()
 
-BACKEND_PORT = process.env.REACT_APP_BACKEND_PORT
+const BACKEND_PORT = process.env.REACT_APP_BACKEND_PORT
 
 app.use(express.json())
 app.use(cors({
