@@ -13,6 +13,6 @@
 
  ## DEPLOYMENT
 
-This app has been deployed at https://hire-a-drive-frontend.onrender.com/
+This app has been deployed at hire-a-drive-client.onrender.com/ 
 
 You can check it out there. Enjoy :)
