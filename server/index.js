@@ -16,7 +16,7 @@ app.listen(PORT, ()=>{
 })
 
 const connect=async()=>{
-    await mongoose.connect("mongodb+srv://HamiYasir:hamihami@hamicluster01.e8thkdr.mongodb.net/?retryWrites=true&w=majority&appName=HamiCluster01")
+    await mongoose.connect(process.env.REACT_APP_MONGO_API_URL)
     console.log("Database connected.")
 }
 
