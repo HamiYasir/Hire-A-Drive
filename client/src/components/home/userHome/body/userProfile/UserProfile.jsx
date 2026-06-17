@@ -3,8 +3,6 @@ import styles from "./userProfile.module.css"
 import image from "../../../../pictures/abhinand_t.jpg"
 import {Box,Stack,InputLabel,Button,Typography,TextareaAutosize,Select,MenuItem,Paper} from "@mui/material"
 import axios from "axios"
-import firebase from "firebase/compat/app"
-import "firebase/compat/storage"
 
 const UserProfile=()=>{
   const [details, setDetails]=useState("")
@@ -22,7 +20,7 @@ const UserProfile=()=>{
   }, [])
 
   const GetDetails=async()=>{
-    const result=await axios.get("http://localhost:4000/getDetails", {params:{email:localStorage.getItem('email')}})
+    const result=await axios.get(`http://localhost:${process.env.REACT_APP_BACKEND_PORT}/getDetails`, {params:{email:localStorage.getItem('email')}})
     setDetails(result.data.details)
   }
 
@@ -63,26 +61,47 @@ const UserProfile=()=>{
     setAddress(event.target.value)
   }
 
-  const uploadImageAndDownloadURL=async(event)=>{
-    if(selectedFile){
-      const storageRef=firebase.storage().ref()
-      const fileRef=storageRef.child(selectedFile.name)
+  const uploadImageAndDownloadURL = async () => {
+    if (!selectedFile) {
+      alert("Please select an image")
+      return null
+    }
 
-      await fileRef.put(selectedFile)
-      const downloadURL=await fileRef.getDownloadURL()
-      setProfileURL(downloadURL)
-      return downloadURL
-    }else{
-      alert("No profile picture selected. Please select a profile picture.")
+    const formData = new FormData()
+
+    formData.append("file", selectedFile)
+    formData.append(
+      "upload_preset",
+      process.env.REACT_APP_CLOUDINARY_UPLOAD_PRESET
+    )
+
+    try {
+      const response = await axios.post(
+        `https://api.cloudinary.com/v1_1/${process.env.REACT_APP_CLOUDINARY_CLOUD_NAME}/image/upload`,
+        formData
+      )
+
+      return response.data.secure_url
+    }
+    catch(error){
+      console.error(error)
       return null
     }
   }
 
   const changeProfilePic=async(event)=>{
     const profilePic=await uploadImageAndDownloadURL()
-    const status_pfp=await axios.put(`http://localhost:4000/editUser/${localStorage.getItem('email')}`, {profilePic:profilePic})
-    console.log(status_pfp)
-    window.location.reload()
+    if(profilePic){
+      const status_pfp=await axios.put(
+        `http://localhost:${process.env.REACT_APP_BACKEND_PORT}/editUser/${localStorage.getItem('email')}`,
+        {
+          profilePic
+        }
+      )
+      console.log(status_pfp)
+      window.location.reload()
+      window.location.reload()
+    }
   }
 
   const changePassword=async()=>{

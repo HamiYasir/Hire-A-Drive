@@ -17,7 +17,7 @@ const YourRequests=()=>{
 
   useEffect(()=>{
     const getAcceptedRequests=async()=>{
-      const accepted_request_status = await axios.get("http://localhost:4000/acceptedUserRequests", {params: {email: localStorage.getItem('email')}})
+      const accepted_request_status = await axios.get(`http://localhost:${process.env.REACT_APP_BACKEND_PORT}/acceptedUserRequests`, {params: {email: localStorage.getItem('email')}})
       console.log("accepted request status="+accepted_request_status.data)
       setAcceptedRequests(accepted_request_status.data)
       setCurrentRequestId(accepted_request_status.data[0].requestId)
@@ -46,7 +46,7 @@ const YourRequests=()=>{
   }
 
   const confirmDriver=async()=>{
-    const confirm_driver_status = await axios.put(`http://localhost:4000/confirmDriver/${currentRequestId}`, {driverId: selectedEmail, drivername: selectedDriver, confirmedFare: selectedFare})
+    const confirm_driver_status = await axios.put(`http://localhost:${process.env.REACT_APP_BACKEND_PORT}/confirmDriver/${currentRequestId}`, {driverId: selectedEmail, drivername: selectedDriver, confirmedFare: selectedFare})
     console.log("confirm_driver_status="+confirm_driver_status)
     navigate("/userJourney", {state: {userId: localStorage.getItem('email'), driverId: selectedEmail}}) 
     setSelectedDriver("")

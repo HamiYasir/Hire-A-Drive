@@ -11,7 +11,7 @@ const UserHeader=({sendTabValueToHome})=>{
 
   useEffect(()=>{
     const getAcceptedRequests=async()=>{
-      const accepted_request_status = await axios.get("http://localhost:4000/acceptedUserRequests", {params:{email: localStorage.getItem('email')}})
+      const accepted_request_status = await axios.get(`http://localhost:${process.env.REACT_APP_BACKEND_PORT}/acceptedUserRequests`, {params:{email: localStorage.getItem('email')}})
       console.log("accepted request status="+accepted_request_status.data)
       if(accepted_request_status.data.length>0)
         setCurrentUserStatus(true)

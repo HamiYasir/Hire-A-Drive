@@ -28,20 +28,20 @@ const Home=()=>{
   useEffect(()=>{
     const initialize=async()=>{
       const getHomePageMode=async()=>{
-        const details=await axios.get("http://localhost:4000/getDetails",{params:{email:email}})
+        const details=await axios.get(`http://localhost:${process.env.REACT_APP_BACKEND_PORT}/getDetails`,{params:{email:email}})
         setHomePageMode(details.data.type)
       }  
 
       setEmail(localStorage.getItem("email"))
       await getHomePageMode()
       if(homePageMode==="user"){
-        const validatedUserRequestFromUser=await axios.get("http://localhost:4000/getValidatedUserRequestFromUser",{params:{userId: localStorage.getItem('email')}})
+        const validatedUserRequestFromUser=await axios.get(`http://localhost:${process.env.REACT_APP_BACKEND_PORT}/getValidatedUserRequestFromUser`,{params:{userId: localStorage.getItem('email')}})
         setIsUserRequestValidatedFromUser(validatedUserRequestFromUser.data)
         if (validatedUserRequestFromUser.data.isValid)
           navigate("/userJourney", {state: {userId: validatedUserRequestFromUser.data.validatedUserRequest.userId, driverId: validatedUserRequestFromUser.data.validatedUserRequest.driverId}})
       }
       else{
-        const validatedUserRequestFromDriver=await axios.get("http://localhost:4000/getValidatedUserRequestFromDriver",{params:{driverId: localStorage.getItem('email')}})
+        const validatedUserRequestFromDriver=await axios.get(`http://localhost:${process.env.REACT_APP_BACKEND_PORT}/getValidatedUserRequestFromDriver`,{params:{driverId: localStorage.getItem('email')}})
         setIsUserRequestValidatedFromDriver(validatedUserRequestFromDriver.data)
         if (validatedUserRequestFromDriver.data.isValid)
           navigate("/driverJourney", {state: {userId: validatedUserRequestFromDriver.data.validatedUserRequest.userId, driverId: validatedUserRequestFromDriver.data.validatedUserRequest.driverId}})

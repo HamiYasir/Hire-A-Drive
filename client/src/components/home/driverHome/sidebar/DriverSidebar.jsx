@@ -20,7 +20,7 @@ const DriverSidebar=()=>{
   }
 
   const getApprovedRequests=async()=>{
-    const accepted_request_status = await axios.get("http://localhost:4000/approvedUserRequests", {params:{email: localStorage.getItem('email')}})
+    const accepted_request_status = await axios.get(`http://localhost:${process.env.REACT_APP_BACKEND_PORT}/approvedUserRequests`, {params:{email: localStorage.getItem('email')}})
     if(accepted_request_status.data.active === true)
       setCurrentDriverStatus(true)
     else if(accepted_request_status.data.active === false)
@@ -35,7 +35,7 @@ const DriverSidebar=()=>{
   },[])
 
   const getSessionDetails=async()=>{
-    const sessionDetails=await axios.get("http://localhost:4000/getDetails", {params:{email:localStorage.getItem("email")}})
+    const sessionDetails=await axios.get(`http://localhost:${process.env.REACT_APP_BACKEND_PORT}/getDetails`, {params:{email:localStorage.getItem("email")}})
     setProfilePic(sessionDetails.data.details.profilePic)
     setUsername(sessionDetails.data.details.username)
     setAddress(sessionDetails.data.details.address)

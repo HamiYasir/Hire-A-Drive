@@ -18,17 +18,17 @@ const UserJourney=()=>{
 
     useEffect(()=>{
         const getDetailsForUser=async()=>{
-            const details=await axios.get("http://localhost:4000/getDetails",{params:{email:userId}})
+            const details=await axios.get(`http://localhost:${process.env.REACT_APP_BACKEND_PORT}/getDetails`,{params:{email:userId}})
             setUsername(details.data.details.username)
         }
 
         const getDetailsForDriver=async()=>{
-            const details=await axios.get("http://localhost:4000/getDetails",{params:{email:driverId}})
+            const details=await axios.get(`http://localhost:${process.env.REACT_APP_BACKEND_PORT}/getDetails`,{params:{email:driverId}})
             setDrivername(details.data.details.username)
         }
         
         const getValidatedUserRequestsForUsers=async()=>{
-            const validatedUserRequestFromUser=await axios.get("http://localhost:4000/getValidatedUserRequestFromUser",{params:{userId: localStorage.getItem('email')}})
+            const validatedUserRequestFromUser=await axios.get(`http://localhost:${process.env.REACT_APP_BACKEND_PORT}/getValidatedUserRequestFromUser`,{params:{userId: localStorage.getItem('email')}})
             setIsUserRequestValidatedFromUser(validatedUserRequestFromUser.data.isValid)
             setFare(validatedUserRequestFromUser.data.validatedUserRequest.confirmedFare)
             setPickUp(validatedUserRequestFromUser.data.validatedUserRequest.startingLocation)
@@ -43,7 +43,7 @@ const UserJourney=()=>{
     }, [isUserRequestValidatedFromUser, navigate])
 
     const cancelJourney=async()=>{
-        await axios.delete(`http://localhost:4000/deleteUserRequest/${userId}/${driverId}`)
+        await axios.delete(`http://localhost:${process.env.REACT_APP_BACKEND_PORT}/deleteUserRequest/${userId}/${driverId}`)
         navigate('/home')
     }
 

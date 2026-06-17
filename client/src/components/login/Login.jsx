@@ -26,7 +26,7 @@ const Login=()=>{
     }
 
     const login=async()=>{
-        const submit=await axios.post("http://localhost:4000/login", {email:email, password:password})
+        const submit=await axios.post(`http://localhost:${process.env.REACT_APP_BACKEND_PORT}/login`, {email:email, password:password})
         if(submit.data.doesExist===true){
             if(submit.data.passwordCheck===true){
                 localStorage.setItem("email", email)

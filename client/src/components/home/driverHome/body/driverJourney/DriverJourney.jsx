@@ -18,17 +18,17 @@ const DriverJourney=()=>{
 
     useEffect(()=>{
         const getDetailsForUser=async()=>{
-            const details=await axios.get("http://localhost:4000/getDetails",{params:{email:userId}})
+            const details=await axios.get(`http://localhost:${process.env.REACT_APP_BACKEND_PORT}/getDetails`,{params:{email:userId}})
             setUsername(details.data.details.username)
         }
 
         const getDetailsForDriver=async()=>{
-            const details=await axios.get("http://localhost:4000/getDetails",{params:{email:driverId}})
+            const details=await axios.get(`http://localhost:${process.env.REACT_APP_BACKEND_PORT}/getDetails`,{params:{email:driverId}})
             setDrivername(details.data.details.username)
         }
 
         const getValidatedUserRequestsForDrivers=async()=>{
-            const validatedUserRequestFromDriver=await axios.get("http://localhost:4000/getValidatedUserRequestFromDriver",{params:{driverId: localStorage.getItem('email')}})
+            const validatedUserRequestFromDriver=await axios.get(`http://localhost:${process.env.REACT_APP_BACKEND_PORT}/getValidatedUserRequestFromDriver`,{params:{driverId: localStorage.getItem('email')}})
             setIsUserRequestValidatedFromDriver(validatedUserRequestFromDriver.data.isValid)
             setFare(validatedUserRequestFromDriver.data.validatedUserRequest.confirmedFare)
             setPickUp(validatedUserRequestFromDriver.data.validatedUserRequest.startingLocation)
@@ -43,12 +43,12 @@ const DriverJourney=()=>{
     }, [isUserRequestValidatedFromDriver, navigate])
 
     const finishJourney=async()=>{
-        await axios.delete(`http://localhost:4000/deleteUserRequest/${userId}/${driverId}`)
+        await axios.delete(`http://localhost:${process.env.REACT_APP_BACKEND_PORT}/deleteUserRequest/${userId}/${driverId}`)
         navigate('/home')
     }
 
     const cancelJourney=async()=>{
-        await axios.delete(`http://localhost:4000/deleteUserRequest/${userId}/${driverId}`)
+        await axios.delete(`http://localhost:${process.env.REACT_APP_BACKEND_PORT}/deleteUserRequest/${userId}/${driverId}`)
         navigate('/home')
     }
 

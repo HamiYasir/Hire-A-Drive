@@ -3,8 +3,6 @@ import {Box, Input, Stack, Button, InputLabel, TextareaAutosize, Select, MenuIte
 import styles from "./userSignup.module.css"
 import defaultImage from "../../pictures/default_profile_pic_2.jpeg"
 import axios from "axios"
-import firebase from "firebase/compat/app"
-import "firebase/compat/storage"
 import {useNavigate} from "react-router-dom"
 
 const UserSignup=()=>{
@@ -32,17 +30,31 @@ const UserSignup=()=>{
     }
   }
 
-  const uploadImageAndDownloadURL=async()=>{
-    if(selectedFile){
-      const storageRef=firebase.storage().ref()
-      const fileRef=storageRef.child(selectedFile.name)
+  const uploadImageAndDownloadURL = async () => {
+    if (!selectedFile) {
+      alert("Please select an image")
+      return null
+    }
 
-      await fileRef.put(selectedFile)
-      const downloadURL=await fileRef.getDownloadURL()
-      setProfileURL(downloadURL)   
-      return downloadURL
-    }else{
-      alert("No profile picture selected. Please select a profile picture.")
+    const formData = new FormData()
+
+    formData.append("file", selectedFile)
+    formData.append(
+      "upload_preset",
+      process.env.REACT_APP_CLOUDINARY_UPLOAD_PRESET
+    )
+
+    try {
+      const response = await axios.post(
+        `https://api.cloudinary.com/v1_1/${process.env.REACT_APP_CLOUDINARY_CLOUD_NAME}/image/upload`,
+        formData
+      )
+
+      return response.data.secure_url
+    }
+    catch(error){
+      console.error(error)
+      return null
     }
   }
 
@@ -85,7 +97,7 @@ const UserSignup=()=>{
         const downloadURL=await uploadImageAndDownloadURL()
         if(downloadURL){
           const dateOfJoining=getCurrentDate()
-          const submit=await axios.post("http://localhost:4000/userSignup", {profilePic:downloadURL, username:username, email:email, password:password, dateOfBirth:dateOfBirth, dateOfJoining:dateOfJoining, district:district, address:address})
+          const submit=await axios.post(`http://localhost:${process.env.REACT_APP_BACKEND_PORT}/userSignup`, {profilePic:downloadURL, username:username, email:email, password:password, dateOfBirth:dateOfBirth, dateOfJoining:dateOfJoining, district:district, address:address})
           if(submit.data.userExists===true){
             alert("A user with the email "+email+" already exists.")
           }else{

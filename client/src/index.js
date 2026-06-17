@@ -3,19 +3,6 @@ import ReactDOM from 'react-dom/client';
 import './index.css';
 import App from './App';
 import reportWebVitals from './reportWebVitals';
-import firebase from 'firebase/compat/app';
-
-const firebaseConfig={
-  apiKey: "AIzaSyCooxSvr5kOXdwf-ACV-w6QnI5EPHVKnWM",
-  authDomain: "hire-a-drive-storage.firebaseapp.com",
-  projectId: "hire-a-drive-storage",
-  storageBucket: "hire-a-drive-storage.appspot.com",
-  messagingSenderId: "269470816919",
-  appId: "1:269470816919:web:16b55635ba456d5dbb67d2",
-  measurementId: "G-EWVETL36J2"
-};
-
-firebase.initializeApp(firebaseConfig);
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(

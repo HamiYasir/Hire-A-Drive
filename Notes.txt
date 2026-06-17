@@ -1,3 +1,0 @@
--The user profile pictures are stored in firebase
-
--Google maps API is integraterd using Google Cloud Console

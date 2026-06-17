@@ -20,7 +20,7 @@ const UserSidebar=()=>{
     }
 
     const getAcceptedRequests=async()=>{
-      const accepted_request_status = await axios.get("http://localhost:4000/acceptedUserRequests", {params:{email: localStorage.getItem('email')}})
+      const accepted_request_status = await axios.get(`http://localhost:${process.env.REACT_APP_BACKEND_PORT}/acceptedUserRequests`, {params:{email: localStorage.getItem('email')}})
       console.log("accepted_request_status="+accepted_request_status.data)
       if(accepted_request_status.data.length > 0)
         setCurrentStatus(true)
@@ -36,7 +36,7 @@ const UserSidebar=()=>{
   },[])
 
   const getSessionDetails=async()=>{
-    const sessionDetails=await axios.get("http://localhost:4000/getDetails", {params:{email:localStorage.getItem("email")}})
+    const sessionDetails=await axios.get(`http://localhost:${process.env.REACT_APP_BACKEND_PORT}/getDetails`, {params:{email:localStorage.getItem("email")}})
     setProfilePic(sessionDetails.data.details.profilePic)
     setUsername(sessionDetails.data.details.username)
     setAddress(sessionDetails.data.details.address)
