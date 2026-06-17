@@ -16,12 +16,14 @@ const RequestDriver=()=>{
   
   useEffect(() => {
     const fetchRequestCount=async()=>{
-      const response = await axios.get(`http://localhost:${process.env.REACT_APP_BACKEND_PORT}/getRequestCount`, {params: {email: localStorage.getItem('email')}})
+      // const response = await axios.get(`http://localhost:${process.env.REACT_APP_BACKEND_PORT}/getRequestCount`, {params: {email: localStorage.getItem('email')}}) // LOCALHOST
+      const response = await axios.get(`https://hire-a-drive-backend.onrender.com/getRequestCount`, {params: {email: localStorage.getItem('email')}}) // DEPLOYMENT
       setTotalRequests(response.data.count)
     }
 
     const getUserRequestApprovalStatus=async()=>{
-      const user_request_status = await axios.get(`http://localhost:${process.env.REACT_APP_BACKEND_PORT}/userRequestApprovalStatus`, {params: {email: localStorage.getItem('email')}})
+      // const user_request_status = await axios.get(`http://localhost:${process.env.REACT_APP_BACKEND_PORT}/userRequestApprovalStatus`, {params: {email: localStorage.getItem('email')}}) // LOCALHOST
+      const user_request_status = await axios.get(`https://hire-a-drive-backend.onrender.com/userRequestApprovalStatus`, {params: {email: localStorage.getItem('email')}}) // DEPLOYMENT
       if(user_request_status.data.active === true)
         setRequestPending(true)
       else if(user_request_status.data.active === false)
@@ -62,7 +64,8 @@ const RequestDriver=()=>{
       return;
     }
     setLoading(true); 
-    const status_submit=await axios.post(`http://localhost:${process.env.REACT_APP_BACKEND_PORT}/submitUserRequest`, {requestId:totalRequests ,userId:localStorage.getItem('email'),driverId: "", startingLocation:startingLocation, destination:destination, vehicle:vehicle, driver:driver})
+    // const status_submit=await axios.post(`http://localhost:${process.env.REACT_APP_BACKEND_PORT}/submitUserRequest`, {requestId:totalRequests ,userId:localStorage.getItem('email'),driverId: "", startingLocation:startingLocation, destination:destination, vehicle:vehicle, driver:driver}) // LOCALHOST
+    const status_submit=await axios.post(`https://hire-a-drive-backend.onrender.com/submitUserRequest`, {requestId:totalRequests ,userId:localStorage.getItem('email'),driverId: "", startingLocation:startingLocation, destination:destination, vehicle:vehicle, driver:driver}) // DEPLOYMENT
     console.log(status_submit)
     setLoading(false);
     setStartingLocation("")

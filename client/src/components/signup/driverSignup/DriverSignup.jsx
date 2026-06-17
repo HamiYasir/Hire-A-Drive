@@ -102,7 +102,8 @@ const DriverSignup=()=>{
         const downloadURL=await uploadImageAndDownloadURL()
         if(downloadURL){
           const dateOfJoining=getCurrentDate()
-          const submit=await axios.post(`http://localhost:${process.env.REACT_APP_BACKEND_PORT}/driverSignup`, {profilePic:downloadURL, username:username, email:email, password:password, dateOfBirth:dateOfBirth, dateOfJoining:dateOfJoining, district:district, vehicle:vehicle, address:address})
+          // const submit=await axios.post(`http://localhost:${process.env.REACT_APP_BACKEND_PORT}/driverSignup`, {profilePic:downloadURL, username:username, email:email, password:password, dateOfBirth:dateOfBirth, dateOfJoining:dateOfJoining, district:district, vehicle:vehicle, address:address}) // LOCALHOST
+          const submit=await axios.post(`https://hire-a-drive-backend.onrender.com/driverSignup`, {profilePic:downloadURL, username:username, email:email, password:password, dateOfBirth:dateOfBirth, dateOfJoining:dateOfJoining, district:district, vehicle:vehicle, address:address}) // DEPLOYMENT
           if(submit.data.driverExists===true){
             alert("A driver with the email "+email+" already exists.")
           }else{

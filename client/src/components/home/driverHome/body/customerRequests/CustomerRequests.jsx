@@ -18,21 +18,24 @@ const CustomerRequests=()=>{
       alert("Please enter a valid fare amount.")
       return
     }
-    const accepted_status=await axios.put(`http://localhost:${process.env.REACT_APP_BACKEND_PORT}/acceptRequest/${requestId}`, {driverId: localStorage.getItem('email'), fare: enteredFare})
+    // const accepted_status=await axios.put(`http://localhost:${process.env.REACT_APP_BACKEND_PORT}/acceptRequest/${requestId}`, {driverId: localStorage.getItem('email'), fare: enteredFare}) // LOCALHOST
+    const accepted_status=await axios.put(`https://hire-a-drive-backend.onrender.com/acceptRequest/${requestId}`, {driverId: localStorage.getItem('email'), fare: enteredFare}) // DEPLOYMENT 
     console.log("accepted_status="+accepted_status.data.request)
     if (accepted_status.status === 200)
       setRequests((prevRequests) => prevRequests.filter(request => request.requestId !== requestId))
   }
 
   const RejectRequest=async(requestId)=>{
-    const rejected_status=await axios.put(`http://localhost:${process.env.REACT_APP_BACKEND_PORT}/rejectRequest/${requestId}`, {driverId: localStorage.getItem('email')})    
+    // const rejected_status=await axios.put(`http://localhost:${process.env.REACT_APP_BACKEND_PORT}/rejectRequest/${requestId}`, {driverId: localStorage.getItem('email')}) // LOCALHOST
+    const rejected_status=await axios.put(`https://hire-a-drive-backend.onrender.com/acceptRequest/rejectRequest/${requestId}`, {driverId: localStorage.getItem('email')}) // DEPLOYMENT
     console.log("rejected_status="+rejected_status)
     if (rejected_status.status === 200)
       setRequests((prevRequests) => prevRequests.filter(request => request.requestId !== requestId))
   }
 
   const getRequests=async()=>{
-    const requests_status=await axios.get(`http://localhost:${process.env.REACT_APP_BACKEND_PORT}/getUserRequests`, {params:{location:location}})
+    // const requests_status=await axios.get(`http://localhost:${process.env.REACT_APP_BACKEND_PORT}/getUserRequests`, {params:{location:location}}) // LOCALHOST
+    const requests_status=await axios.get(`https://hire-a-drive-backend.onrender.com/getUserRequests`, {params:{location:location}}) // DEPLOYMENT
     const filteredRequests = requests_status.data.filter(request => {
       const alreadyAcceptedByDriverRequest=!request.accepted?.includes(localStorage.getItem('email')) //Used to filter out already accepted requests by this driver
       const onGoingRequests=!request.driverId && request.userId

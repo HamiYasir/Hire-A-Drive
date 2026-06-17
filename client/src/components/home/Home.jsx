@@ -28,20 +28,23 @@ const Home=()=>{
   useEffect(()=>{
     const initialize=async()=>{
       const getHomePageMode=async()=>{
-        const details=await axios.get(`http://localhost:${process.env.REACT_APP_BACKEND_PORT}/getDetails`,{params:{email:email}})
+        // const details=await axios.get(`http://localhost:${process.env.REACT_APP_BACKEND_PORT}/getDetails`,{params:{email:email}}) // LOCALHOST
+        const details=await axios.get(`https://hire-a-drive-backend.onrender.com/getDetails`,{params:{email:email}}) // DEPLOYMENT
         setHomePageMode(details.data.type)
       }  
 
       setEmail(localStorage.getItem("email"))
       await getHomePageMode()
       if(homePageMode==="user"){
-        const validatedUserRequestFromUser=await axios.get(`http://localhost:${process.env.REACT_APP_BACKEND_PORT}/getValidatedUserRequestFromUser`,{params:{userId: localStorage.getItem('email')}})
+        // const validatedUserRequestFromUser=await axios.get(`http://localhost:${process.env.REACT_APP_BACKEND_PORT}/getValidatedUserRequestFromUser`,{params:{userId: localStorage.getItem('email')}}) // LOCALHOST
+        const validatedUserRequestFromUser=await axios.get(`https://hire-a-drive-backend.onrender.com/getValidatedUserRequestFromUser`,{params:{userId: localStorage.getItem('email')}}) // DEPLOYMENT
         setIsUserRequestValidatedFromUser(validatedUserRequestFromUser.data)
         if (validatedUserRequestFromUser.data.isValid)
           navigate("/userJourney", {state: {userId: validatedUserRequestFromUser.data.validatedUserRequest.userId, driverId: validatedUserRequestFromUser.data.validatedUserRequest.driverId}})
       }
       else{
-        const validatedUserRequestFromDriver=await axios.get(`http://localhost:${process.env.REACT_APP_BACKEND_PORT}/getValidatedUserRequestFromDriver`,{params:{driverId: localStorage.getItem('email')}})
+        // const validatedUserRequestFromDriver=await axios.get(`http://localhost:${process.env.REACT_APP_BACKEND_PORT}/getValidatedUserRequestFromDriver`,{params:{driverId: localStorage.getItem('email')}}) // LOCALHOST
+        const validatedUserRequestFromDriver=await axios.get(`https://hire-a-drive-backend.onrender.com/getValidatedUserRequestFromDriver`,{params:{driverId: localStorage.getItem('email')}}) // DEPLOYMENT
         setIsUserRequestValidatedFromDriver(validatedUserRequestFromDriver.data)
         if (validatedUserRequestFromDriver.data.isValid)
           navigate("/driverJourney", {state: {userId: validatedUserRequestFromDriver.data.validatedUserRequest.userId, driverId: validatedUserRequestFromDriver.data.validatedUserRequest.driverId}})

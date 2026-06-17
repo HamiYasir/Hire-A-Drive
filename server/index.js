@@ -6,10 +6,18 @@ const {UserB, Driver, UserRequests}=require('./models/models')
 require('dotenv').config();
 
 const app=express()
-app.use(express.json())
-app.use(cors())
 
-PORT = process.env.REACT_APP_BACKEND_PORT
+BACKEND_PORT = process.env.REACT_APP_BACKEND_PORT
+
+app.use(express.json())
+app.use(cors({
+  origin: [
+    "http://localhost:3000",
+    "https://hire-a-drive-backend.onrender.com"
+  ]
+}));
+
+
 
 app.listen(PORT, ()=>{
     console.log("Server Started.")

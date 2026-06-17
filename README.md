@@ -13,4 +13,6 @@
 
  ## DEPLOYMENT
 
- This project has yet to be deployed :?
+This app has been deployed at https://hire-a-drive-frontend.onrender.com/
+
+You can check it out there. Enjoy :)

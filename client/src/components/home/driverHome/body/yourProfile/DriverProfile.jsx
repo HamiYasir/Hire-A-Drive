@@ -20,7 +20,8 @@ const DriverProfile=()=>{
   }, [])
 
   const GetDetails=async()=>{
-    const result=await axios.get(`http://localhost:${process.env.REACT_APP_BACKEND_PORT}/getDetails`, {params:{email:localStorage.getItem('email')}})
+    // const result=await axios.get(`http://localhost:${process.env.REACT_APP_BACKEND_PORT}/getDetails`, {params:{email:localStorage.getItem('email')}}) // LOCALHOST
+    const result=await axios.get(`https://hire-a-drive-backend.onrender.com/getDetails`, {params:{email:localStorage.getItem('email')}}) // DEPLOYMENT
     setDetails(result.data.details)
     setRating(result.data.details.rating)
     console.log(rating)
@@ -78,11 +79,7 @@ const DriverProfile=()=>{
     )
 
     try {
-      const response = await axios.post(
-        `https://api.cloudinary.com/v1_1/${process.env.REACT_APP_CLOUDINARY_CLOUD_NAME}/image/upload`,
-        formData
-      )
-
+      const response = await axios.post(`https://api.cloudinary.com/v1_1/${process.env.REACT_APP_CLOUDINARY_CLOUD_NAME}/image/upload`, formData)
       return response.data.secure_url
     }
     catch(error){
@@ -94,13 +91,8 @@ const DriverProfile=()=>{
   const changeProfilePic=async(event)=>{
     const profilePic=await uploadImageAndDownloadURL()
     if(profilePic){
-      const status_pfp=await axios.put(
-        `http://localhost:${process.env.REACT_APP_BACKEND_PORT}/editDriver/${localStorage.getItem('email')}`,
-        {
-          profilePic
-        }
-      )
-
+      // const status_pfp=await axios.put(`http://localhost:${process.env.REACT_APP_BACKEND_PORT}/editDriver/${localStorage.getItem('email')}`, {profilePic}) // LOCALHOST
+      const status_pfp=await axios.put(`https://hire-a-drive-backend.onrender.com/editDriver/${localStorage.getItem('email')}`, {profilePic}) // DEPLOYMENT
       window.location.reload()
     }
   }
@@ -110,7 +102,8 @@ const DriverProfile=()=>{
     {
       if(password===confirmPassword)
       {
-        const status_password=await axios.put(`http://localhost:${process.env.REACT_APP_BACKEND_PORT}/editDriver/${localStorage.getItem('email')}`, {password:password})
+        // const status_password=await axios.put(`http://localhost:${process.env.REACT_APP_BACKEND_PORT}/editDriver/${localStorage.getItem('email')}`, {password:password}) // LOCALHOST
+        const status_password=await axios.put(`https://hire-a-drive-backend.onrender.com/editDriver/${localStorage.getItem('email')}`, {password:password}) // DEPLOYMENT
         setPassword()
         setConfirmPassword()
         setError()
@@ -123,12 +116,14 @@ const DriverProfile=()=>{
   }
 
   const changeRegion=async()=>{
-    const status_region=await axios.put(`http://localhost:${process.env.REACT_APP_BACKEND_PORT}/editDriver/${localStorage.getItem('email')}`, {district:region})
+    // const status_region=await axios.put(`http://localhost:${process.env.REACT_APP_BACKEND_PORT}/editDriver/${localStorage.getItem('email')}`, {district:region}) // LOCALHOST
+    const status_region=await axios.put(`https://hire-a-drive-backend.onrender.com/editDriver/${localStorage.getItem('email')}`, {district:region}) // DEPLOYMENT
     setRegion()
   }
 
   const changeAddress=async()=>{
-    const status_address=await axios.put(`http://localhost:${process.env.REACT_APP_BACKEND_PORT}/editDriver/${localStorage.getItem('email')}`, {address:address})
+    // const status_address=await axios.put(`http://localhost:${process.env.REACT_APP_BACKEND_PORT}/editDriver/${localStorage.getItem('email')}`, {address:address}) // LOCALHOST
+    const status_address=await axios.put(`https://hire-a-drive-backend.onrender.com/editDriver/${localStorage.getItem('email')}`, {address:address}) // DEPLOYMENT
     setAddress()
   }
 

@@ -18,17 +18,20 @@ const UserJourney=()=>{
 
     useEffect(()=>{
         const getDetailsForUser=async()=>{
-            const details=await axios.get(`http://localhost:${process.env.REACT_APP_BACKEND_PORT}/getDetails`,{params:{email:userId}})
+            // const details=await axios.get(`http://localhost:${process.env.REACT_APP_BACKEND_PORT}/getDetails`,{params:{email:userId}}) // LOCALHOST
+            const details=await axios.get(`https://hire-a-drive-backend.onrender.com/getDetails`,{params:{email:userId}}) // DEPLOYMENT
             setUsername(details.data.details.username)
         }
 
         const getDetailsForDriver=async()=>{
-            const details=await axios.get(`http://localhost:${process.env.REACT_APP_BACKEND_PORT}/getDetails`,{params:{email:driverId}})
+            // const details=await axios.get(`http://localhost:${process.env.REACT_APP_BACKEND_PORT}/getDetails`,{params:{email:driverId}}) // LOCALHOST
+            const details=await axios.get(`https://hire-a-drive-backend.onrender.com/getDetails`,{params:{email:driverId}}) // DEPLOYMENT
             setDrivername(details.data.details.username)
         }
         
         const getValidatedUserRequestsForUsers=async()=>{
-            const validatedUserRequestFromUser=await axios.get(`http://localhost:${process.env.REACT_APP_BACKEND_PORT}/getValidatedUserRequestFromUser`,{params:{userId: localStorage.getItem('email')}})
+            // const validatedUserRequestFromUser=await axios.get(`http://localhost:${process.env.REACT_APP_BACKEND_PORT}/getValidatedUserRequestFromUser`,{params:{userId: localStorage.getItem('email')}}) // LOCALHOST
+            const validatedUserRequestFromUser=await axios.get(`https://hire-a-drive-backend.onrender.com/getValidatedUserRequestFromUser`,{params:{userId: localStorage.getItem('email')}}) // DEPLOYMENT
             setIsUserRequestValidatedFromUser(validatedUserRequestFromUser.data.isValid)
             setFare(validatedUserRequestFromUser.data.validatedUserRequest.confirmedFare)
             setPickUp(validatedUserRequestFromUser.data.validatedUserRequest.startingLocation)
@@ -43,7 +46,8 @@ const UserJourney=()=>{
     }, [isUserRequestValidatedFromUser, navigate])
 
     const cancelJourney=async()=>{
-        await axios.delete(`http://localhost:${process.env.REACT_APP_BACKEND_PORT}/deleteUserRequest/${userId}/${driverId}`)
+        // await axios.delete(`http://localhost:${process.env.REACT_APP_BACKEND_PORT}/deleteUserRequest/${userId}/${driverId}`) // LOCALHOST
+        await axios.delete(`https://hire-a-drive-backend.onrender.com/deleteUserRequest/${userId}/${driverId}`) // DEPLOYMENT
         navigate('/home')
     }
 

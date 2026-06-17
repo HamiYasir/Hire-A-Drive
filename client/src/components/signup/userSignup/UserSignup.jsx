@@ -97,7 +97,8 @@ const UserSignup=()=>{
         const downloadURL=await uploadImageAndDownloadURL()
         if(downloadURL){
           const dateOfJoining=getCurrentDate()
-          const submit=await axios.post(`http://localhost:${process.env.REACT_APP_BACKEND_PORT}/userSignup`, {profilePic:downloadURL, username:username, email:email, password:password, dateOfBirth:dateOfBirth, dateOfJoining:dateOfJoining, district:district, address:address})
+          // const submit=await axios.post(`http://localhost:${process.env.REACT_APP_BACKEND_PORT}/userSignup`, {profilePic:downloadURL, username:username, email:email, password:password, dateOfBirth:dateOfBirth, dateOfJoining:dateOfJoining, district:district, address:address}) // LOCALHOST
+          const submit=await axios.post(`https://hire-a-drive-backend.onrender.com/userSignup`, {profilePic:downloadURL, username:username, email:email, password:password, dateOfBirth:dateOfBirth, dateOfJoining:dateOfJoining, district:district, address:address}) // DEPLOYMENT
           if(submit.data.userExists===true){
             alert("A user with the email "+email+" already exists.")
           }else{

@@ -18,17 +18,20 @@ const DriverJourney=()=>{
 
     useEffect(()=>{
         const getDetailsForUser=async()=>{
-            const details=await axios.get(`http://localhost:${process.env.REACT_APP_BACKEND_PORT}/getDetails`,{params:{email:userId}})
+            // await axios.delete(`http://localhost:${process.env.REACT_APP_BACKEND_PORT}/deleteUserRequest/${userId}/${driverId}`) // LOCALHOST
+            await axios.delete(`https://hire-a-drive-backend.onrender.com/deleteUserRequest/${userId}/${driverId}`) // DEPLOYMENT
             setUsername(details.data.details.username)
         }
 
         const getDetailsForDriver=async()=>{
-            const details=await axios.get(`http://localhost:${process.env.REACT_APP_BACKEND_PORT}/getDetails`,{params:{email:driverId}})
+            // const details=await axios.get(`http://localhost:${process.env.REACT_APP_BACKEND_PORT}/getDetails`,{params:{email:driverId}})  // LOCALHOST
+            const details=await axios.get(`https://hire-a-drive-backend.onrender.com/getDetails`,{params:{email:driverId}}) // DEPLOYMENT
             setDrivername(details.data.details.username)
         }
 
         const getValidatedUserRequestsForDrivers=async()=>{
-            const validatedUserRequestFromDriver=await axios.get(`http://localhost:${process.env.REACT_APP_BACKEND_PORT}/getValidatedUserRequestFromDriver`,{params:{driverId: localStorage.getItem('email')}})
+            // const validatedUserRequestFromDriver=await axios.get(`http://localhost:${process.env.REACT_APP_BACKEND_PORT}/getValidatedUserRequestFromDriver`,{params:{driverId: localStorage.getItem('email')}}) // LOCALHOST
+            const validatedUserRequestFromDriver=await axios.get(`https://hire-a-drive-backend.onrender.com/getValidatedUserRequestFromDriver`,{params:{driverId: localStorage.getItem('email')}}) // DEPLOYMENT
             setIsUserRequestValidatedFromDriver(validatedUserRequestFromDriver.data.isValid)
             setFare(validatedUserRequestFromDriver.data.validatedUserRequest.confirmedFare)
             setPickUp(validatedUserRequestFromDriver.data.validatedUserRequest.startingLocation)
@@ -43,12 +46,14 @@ const DriverJourney=()=>{
     }, [isUserRequestValidatedFromDriver, navigate])
 
     const finishJourney=async()=>{
-        await axios.delete(`http://localhost:${process.env.REACT_APP_BACKEND_PORT}/deleteUserRequest/${userId}/${driverId}`)
+        // await axios.delete(`http://localhost:${process.env.REACT_APP_BACKEND_PORT}/deleteUserRequest/${userId}/${driverId}`) // LOCALHOST
+        await axios.delete(`https://hire-a-drive-backend.onrender.com/deleteUserRequest/${userId}/${driverId}`) // DEPLOYMENT
         navigate('/home')
     }
 
     const cancelJourney=async()=>{
-        await axios.delete(`http://localhost:${process.env.REACT_APP_BACKEND_PORT}/deleteUserRequest/${userId}/${driverId}`)
+        // await axios.delete(`http://localhost:${process.env.REACT_APP_BACKEND_PORT}/deleteUserRequest/${userId}/${driverId}`) // LOCALHOST
+        await axios.delete(`https://hire-a-drive-backend.onrender.com/deleteUserRequest/${userId}/${driverId}`) // DEPLOYMENT
         navigate('/home')
     }
 

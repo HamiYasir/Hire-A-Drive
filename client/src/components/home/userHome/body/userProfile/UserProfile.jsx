@@ -20,7 +20,8 @@ const UserProfile=()=>{
   }, [])
 
   const GetDetails=async()=>{
-    const result=await axios.get(`http://localhost:${process.env.REACT_APP_BACKEND_PORT}/getDetails`, {params:{email:localStorage.getItem('email')}})
+    // const result=await axios.get(`http://localhost:${process.env.REACT_APP_BACKEND_PORT}/getDetails`, {params:{email:localStorage.getItem('email')}}) // LOCALHOST
+    const result=await axios.get(`https://hire-a-drive-backend.onrender.com/getDetails`, {params:{email:localStorage.getItem('email')}}) // DEPLOYMENT
     setDetails(result.data.details)
   }
 
@@ -92,12 +93,8 @@ const UserProfile=()=>{
   const changeProfilePic=async(event)=>{
     const profilePic=await uploadImageAndDownloadURL()
     if(profilePic){
-      const status_pfp=await axios.put(
-        `http://localhost:${process.env.REACT_APP_BACKEND_PORT}/editUser/${localStorage.getItem('email')}`,
-        {
-          profilePic
-        }
-      )
+      // const status_pfp=await axios.put(`http://localhost:${process.env.REACT_APP_BACKEND_PORT}/editUser/${localStorage.getItem('email')}`, {profilePic}) // LOCALHOST
+      const status_pfp=await axios.put(`https://hire-a-drive-backend.onrender.com/editUser/${localStorage.getItem('email')}`, {profilePic}) // DEPLOYMENT
       console.log(status_pfp)
       window.location.reload()
       window.location.reload()
@@ -109,7 +106,8 @@ const UserProfile=()=>{
     {
       if(password===confirmPassword)
       {
-        const status_password=await axios.put(`http://localhost:4000/editUser/${localStorage.getItem('email')}`, {password:password})
+        // const status_password=await axios.put(`http://localhost:${process.env.REACT_APP_BACKEND_PORT}/editUser/${localStorage.getItem('email')}`, {password:password}) // LOCALHOST
+        const status_password=await axios.put(`https://hire-a-drive-backend.onrender.com/editUser/${localStorage.getItem('email')}`, {password:password}) // DEPLOYMENT
         console.log(status_password)
         setPassword()
         setConfirmPassword()
@@ -123,13 +121,15 @@ const UserProfile=()=>{
   }
 
   const changeRegion=async()=>{
-    const status_region=await axios.put(`http://localhost:4000/editUser/${localStorage.getItem('email')}`, {district:region})
+    // const status_region=await axios.put(`http://localhost:${process.env.REACT_APP_BACKEND_PORT}/editUser/${localStorage.getItem('email')}`, {district:region}) // LOCALHOST
+    const status_region=await axios.put(`https://hire-a-drive-backend.onrender.com/editUser/${localStorage.getItem('email')}`, {district:region}) // DEPLOYMENT
     console.log(status_region)
     setRegion()
   }
 
   const changeAddress=async()=>{
-    const status_address=await axios.put(`http://localhost:4000/editUser/${localStorage.getItem('email')}`, {address:address})
+    // const status_address=await axios.put(`http://localhost:${process.env.REACT_APP_BACKEND_PORT}/editUser/${localStorage.getItem('email')}`, {address:address}) // LOCALHOST
+    const status_address=await axios.put(`https://hire-a-drive-backend.onrender.com/editUser/${localStorage.getItem('email')}`, {address:address}) // DEPLOYMENT
     console.log(status_address)
     setAddress()
   }
